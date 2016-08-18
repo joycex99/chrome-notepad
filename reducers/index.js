@@ -28,6 +28,8 @@ const notes = (state = [], action) => {
 
 const currentTab = (state = 0, action) => {
 	switch (action.type) {
+		case 'ADD_TAB':
+			return action.id
 		case 'CHANGE_TAB':
 			return action.id
 		default:

@@ -1,0 +1,81 @@
+.noteList {
+  margin: 0;
+  padding: 0;
+  min-height: 200px;
+  /*list-style: none;*/
+}
+
+.noteList li {
+  position: relative;
+  font-size: 14px;
+  margin-left: 40px;
+  /*border-bottom: 1px solid #ededed;*/
+}
+
+.noteList li:last-child {
+  border-bottom: none;
+}
+
+.noteList li.editing {
+  border-bottom: none;
+  padding: 0;
+}
+
+
+
+.display label {
+  white-space: pre-line;
+  word-break: break-all;
+  padding: 6px 55px 6px 6px;
+  margin-left: -8px;
+  display: block;
+  transition: color 0.4s;
+}
+
+.display:hover {
+	background: #fcfcfc;
+}
+
+.display .destroy {
+  display: none;
+  position: absolute;
+  top: 2px;
+  right: 8px;
+  width: 30px;
+  height: 30px;
+  margin: auto 0;
+  font-size: 20px;
+  color: #cc9a9a;
+  transition: color 0.2s ease-out;
+  text-decoration: none;
+}
+
+.display .destroy:hover {
+  color: #af5b5e;
+}
+
+.display .destroy:after {
+  content: '×';
+}
+
+.display:hover .destroy {
+  display: block;
+}
+
+.editing {
+  border-bottom: none;
+  padding: 0;
+  composes: display;
+  background: #ffffff;
+}
+
+.editing .edit {
+  display: block;
+  width: 506px;
+  padding: 13px 17px 12px 17px;
+  margin: 0 0 0 2px;
+}
+
+.editing:last-child {
+  margin-bottom: -1px;
+}

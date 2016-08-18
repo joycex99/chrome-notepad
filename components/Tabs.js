@@ -1,8 +1,9 @@
 import React, { PropTypes } from 'react'
 import Tab from './Tab'
+import style from './Tabs.css'
 
 const Tabs = ({ tabs, currentTab, onNewTab, onTabClick, onEditTab }) => (
-	<ul>
+	<ul className={style.tabs} >
 		{tabs.map(tab => 
 			<Tab 
 				key={tab.id}

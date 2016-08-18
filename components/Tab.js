@@ -1,4 +1,6 @@
 import React, { Component, PropTypes } from 'react';
+import classnames from 'classnames'
+import style from './Tabs.css'
 
 export default class Tab extends Component {
     constructor(props) {
@@ -17,7 +19,6 @@ export default class Tab extends Component {
     };
 
     handleSave = e => {
-        console.log('handle save!')
         const newName = e.target.value.trim()
         if (newName.length !== 0) {
             this.props.onEditTab(newName)
@@ -30,6 +31,7 @@ export default class Tab extends Component {
         if (this.state.editing) {
             element = (
                 <input type='text'
+                       autoFocus='true'
                        value={this.state.newName}
                        onBlur={this.handleSave}
                        onChange={e => {
@@ -55,7 +57,11 @@ export default class Tab extends Component {
         }
 
         return (
-            <li>{element}</li>
+            <li className={classnames({
+                [style.current]: this.props.active
+            })}>
+                {element}
+            </li>
         )
     }
 }

@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
 import Input from './Input'
+import classnames from 'classnames'
+import style from './NotePanel.css'
 
 export default class Note extends Component {
     constructor(props) {
@@ -40,19 +42,23 @@ export default class Note extends Component {
                         {this.props.text}
                     </label>
                     <a href='#'
+                       className={style.destroy}
                        onClick={e => {
                             e.preventDefault()
                             this.props.deleteNote()
                         }}
-                    >
-                        X
-                    </a>
+                    ></a>
                 </div>
             )
         }
 
         return (
-            <li>{element}</li>
+            <li className={classnames({
+                [style.display]: !this.state.editing,
+                [style.editing]: this.state.editing
+            })}>
+                {element}
+            </li>
         )
     }
 }

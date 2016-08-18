@@ -1,8 +1,9 @@
 import React, {PropTypes} from 'react'
 import Note from './Note'
+import style from './NotePanel.css'
 
 const NotePanel = ({ notes, onEdit, onDelete }) => (
-    <ul>
+    <ul className={style.noteList} >
         {notes.map(note =>
             <Note 
                 key={note.id}

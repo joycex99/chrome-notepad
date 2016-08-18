@@ -1,4 +1,7 @@
 import React, { Component, PropTypes } from 'react'
+import classnames from 'classnames'
+import style from './Input.css'
+
 
 export default class Input extends Component {
     constructor(props) {
@@ -29,7 +32,11 @@ export default class Input extends Component {
 
     render() {
         return (
-            <input type='text'
+            <input className={classnames({
+                    [style.new]: !this.state.editing,
+                    [style.edit]: this.state.editing
+                })}
+                   type='text'
                    autoFocus='true'
                    value={this.state.text}
                    onBlur={this.handleBlur}
@@ -37,7 +44,7 @@ export default class Input extends Component {
                        this.setState({ text: e.target.value })
                    }}
                    onKeyDown={this.handleSubmit}
-            />
+           />
         )
     }
 }

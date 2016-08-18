@@ -22709,6 +22709,8 @@
 		var action = arguments[1];
 
 		switch (action.type) {
+			case 'ADD_TAB':
+				return action.id;
 			case 'CHANGE_TAB':
 				return action.id;
 			default:
@@ -22761,15 +22763,15 @@
 
 	var _TabHeader2 = _interopRequireDefault(_TabHeader);
 
-	var _PanelContainer = __webpack_require__(200);
+	var _PanelContainer = __webpack_require__(205);
 
 	var _PanelContainer2 = _interopRequireDefault(_PanelContainer);
 
-	var _InputFooter = __webpack_require__(204);
+	var _InputFooter = __webpack_require__(213);
 
 	var _InputFooter2 = _interopRequireDefault(_InputFooter);
 
-	var _App = __webpack_require__(205);
+	var _App = __webpack_require__(214);
 
 	var _App2 = _interopRequireDefault(_App);
 
@@ -22803,7 +22805,7 @@
 
 	var _Tabs2 = _interopRequireDefault(_Tabs);
 
-	var _actions = __webpack_require__(199);
+	var _actions = __webpack_require__(204);
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -22859,6 +22861,10 @@
 
 	var _Tab2 = _interopRequireDefault(_Tab);
 
+	var _Tabs = __webpack_require__(200);
+
+	var _Tabs2 = _interopRequireDefault(_Tabs);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	var Tabs = function Tabs(_ref) {
@@ -22869,7 +22875,7 @@
 		var _onEditTab = _ref.onEditTab;
 		return _react2.default.createElement(
 			'ul',
-			null,
+			{ className: _Tabs2.default.tabs },
 			tabs.map(function (tab) {
 				return _react2.default.createElement(_Tab2.default, _extends({
 					key: tab.id
@@ -22926,7 +22932,17 @@
 
 	var _react2 = _interopRequireDefault(_react);
 
+	var _classnames2 = __webpack_require__(199);
+
+	var _classnames3 = _interopRequireDefault(_classnames2);
+
+	var _Tabs = __webpack_require__(200);
+
+	var _Tabs2 = _interopRequireDefault(_Tabs);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
@@ -22949,7 +22965,6 @@
 	        };
 
 	        _this.handleSave = function (e) {
-	            console.log('handle save!');
 	            var newName = e.target.value.trim();
 	            if (newName.length !== 0) {
 	                _this.props.onEditTab(newName);
@@ -22975,6 +22990,7 @@
 	            var element = void 0;
 	            if (this.state.editing) {
 	                element = _react2.default.createElement('input', { type: 'text',
+	                    autoFocus: 'true',
 	                    value: this.state.newName,
 	                    onBlur: this.handleSave,
 	                    onChange: function onChange(e) {
@@ -23000,7 +23016,7 @@
 
 	            return _react2.default.createElement(
 	                'li',
-	                null,
+	                { className: (0, _classnames3.default)(_defineProperty({}, _Tabs2.default.current, this.props.active)) },
 	                element
 	            );
 	        }
@@ -23022,431 +23038,76 @@
 
 /***/ },
 /* 199 */
-/***/ function(module, exports) {
+/***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
+	var __WEBPACK_AMD_DEFINE_ARRAY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
+	  Copyright (c) 2016 Jed Watson.
+	  Licensed under the MIT License (MIT), see
+	  http://jedwatson.github.io/classnames
+	*/
+	/* global define */
 
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-	var nextNoteId = 0;
-	var nextTabId = 1;
+	(function () {
+		'use strict';
 
-	var addNote = exports.addNote = function addNote(text, tabId) {
-	    return {
-	        type: 'ADD_NOTE',
-	        id: nextNoteId++,
-	        tabId: tabId,
-	        text: text
-	    };
-	};
+		var hasOwn = {}.hasOwnProperty;
 
-	var editNote = exports.editNote = function editNote(id, text) {
-	    return {
-	        type: 'EDIT_NOTE',
-	        id: id,
-	        text: text
-	    };
-	};
+		function classNames () {
+			var classes = [];
 
-	var deleteNote = exports.deleteNote = function deleteNote(id) {
-	    return {
-	        type: 'DELETE_NOTE',
-	        id: id
-	    };
-	};
+			for (var i = 0; i < arguments.length; i++) {
+				var arg = arguments[i];
+				if (!arg) continue;
 
-	var addTab = exports.addTab = function addTab(name) {
-	    return {
-	        type: 'ADD_TAB',
-	        id: nextTabId++,
-	        name: name
-	    };
-	};
+				var argType = typeof arg;
 
-	var changeTab = exports.changeTab = function changeTab(tabId) {
-	    return {
-	        type: 'CHANGE_TAB',
-	        id: tabId
-	    };
-	};
+				if (argType === 'string' || argType === 'number') {
+					classes.push(arg);
+				} else if (Array.isArray(arg)) {
+					classes.push(classNames.apply(null, arg));
+				} else if (argType === 'object') {
+					for (var key in arg) {
+						if (hasOwn.call(arg, key) && arg[key]) {
+							classes.push(key);
+						}
+					}
+				}
+			}
 
-	var editTab = exports.editTab = function editTab(tabId, newName) {
-	    return {
-	        type: 'EDIT_TAB',
-	        id: tabId,
-	        newName: newName
-	    };
-	};
+			return classes.join(' ');
+		}
+
+		if (typeof module !== 'undefined' && module.exports) {
+			module.exports = classNames;
+		} else if (true) {
+			// register as 'classnames', consistent with npm package name
+			!(__WEBPACK_AMD_DEFINE_ARRAY__ = [], __WEBPACK_AMD_DEFINE_RESULT__ = function () {
+				return classNames;
+			}.apply(exports, __WEBPACK_AMD_DEFINE_ARRAY__), __WEBPACK_AMD_DEFINE_RESULT__ !== undefined && (module.exports = __WEBPACK_AMD_DEFINE_RESULT__));
+		} else {
+			window.classNames = classNames;
+		}
+	}());
+
 
 /***/ },
 /* 200 */
 /***/ function(module, exports, __webpack_require__) {
 
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _reactRedux = __webpack_require__(185);
-
-	var _NotePanel = __webpack_require__(201);
-
-	var _NotePanel2 = _interopRequireDefault(_NotePanel);
-
-	var _actions = __webpack_require__(199);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var getTabNotes = function getTabNotes(notes, currentTab) {
-	    console.log('CurrentTab: ' + currentTab);
-	    notes.forEach(function (note) {
-	        console.log('Note: ' + JSON.stringify(note));
-	    });
-	    return notes.filter(function (note) {
-	        return note.tabId === currentTab;
-	    });
-	};
-
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        notes: getTabNotes(state.notes, state.currentTab)
-	    };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	    return {
-	        onEdit: function onEdit(id, text) {
-	            dispatch((0, _actions.editNote)(id, text));
-	        },
-	        onDelete: function onDelete(id) {
-	            dispatch((0, _actions.deleteNote)(id));
-	        }
-	    };
-	};
-
-	var PanelContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_NotePanel2.default);
-
-	exports.default = PanelContainer;
-
-/***/ },
-/* 201 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Note = __webpack_require__(202);
-
-	var _Note2 = _interopRequireDefault(_Note);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var NotePanel = function NotePanel(_ref) {
-	    var notes = _ref.notes;
-	    var onEdit = _ref.onEdit;
-	    var onDelete = _ref.onDelete;
-	    return _react2.default.createElement(
-	        'ul',
-	        null,
-	        notes.map(function (note) {
-	            return _react2.default.createElement(_Note2.default, _extends({
-	                key: note.id
-	            }, note, { // contains text, tabId
-	                editNote: function editNote(text) {
-	                    return onEdit(note.id, text);
-	                },
-	                deleteNote: function deleteNote() {
-	                    return onDelete(note.id);
-	                }
-	            }));
-	        })
-	    );
-	};
-
-	NotePanel.propTypes = {
-	    notes: _react.PropTypes.arrayOf(_react.PropTypes.shape({
-	        id: _react.PropTypes.number.isRequired,
-	        tabId: _react.PropTypes.number.isRequired,
-	        text: _react.PropTypes.string.isRequired
-	    }).isRequired).isRequired,
-	    onEdit: _react.PropTypes.func.isRequired,
-	    onDelete: _react.PropTypes.func.isRequired
-	};
-
-	exports.default = NotePanel;
-
-/***/ },
-/* 202 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	var _Input = __webpack_require__(203);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Note = function (_Component) {
-	    _inherits(Note, _Component);
-
-	    function Note(props) {
-	        _classCallCheck(this, Note);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Note).call(this, props));
-
-	        _this.handleDoubleCLick = function () {
-	            _this.setState({ editing: true });
-	        };
-
-	        _this.handleSave = function (text, tabId) {
-	            if (text.length === 0) {
-	                _this.props.deleteNote();
-	            } else {
-	                _this.props.editNote(text);
-	            }
-	            _this.setState({ editing: false });
-	        };
-
-	        _this.state = {
-	            editing: false
-	        };
-	        return _this;
-	    }
-
-	    _createClass(Note, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            var element = void 0;
-	            if (this.state.editing) {
-	                element = _react2.default.createElement(_Input2.default, {
-	                    text: this.props.text,
-	                    tabId: this.props.tabId,
-	                    editing: this.state.editing,
-	                    onSave: this.handleSave
-	                });
-	            } else {
-	                element = _react2.default.createElement(
-	                    'div',
-	                    null,
-	                    _react2.default.createElement(
-	                        'label',
-	                        { onDoubleClick: this.handleDoubleCLick },
-	                        this.props.text
-	                    ),
-	                    _react2.default.createElement(
-	                        'a',
-	                        { href: '#',
-	                            onClick: function onClick(e) {
-	                                e.preventDefault();
-	                                _this2.props.deleteNote();
-	                            }
-	                        },
-	                        'X'
-	                    )
-	                );
-	            }
-
-	            return _react2.default.createElement(
-	                'li',
-	                null,
-	                element
-	            );
-	        }
-	    }]);
-
-	    return Note;
-	}(_react.Component);
-
-	exports.default = Note;
-
-
-	Note.propTypes = {
-	    text: _react.PropTypes.string.isRequired,
-	    tabId: _react.PropTypes.number.isRequired,
-	    editNote: _react.PropTypes.func.isRequired,
-	    deleteNote: _react.PropTypes.func.isRequired
-	};
-
-/***/ },
-/* 203 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-	var _react = __webpack_require__(1);
-
-	var _react2 = _interopRequireDefault(_react);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-	var Input = function (_Component) {
-	    _inherits(Input, _Component);
-
-	    function Input(props) {
-	        _classCallCheck(this, Input);
-
-	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
-
-	        _this.handleBlur = function (e) {
-	            if (_this.props.editing) {
-	                _this.props.onSave(e.target.value, _this.props.currentTab);
-	            }
-	        };
-
-	        _this.handleSubmit = function (e) {
-	            if (e.which === 13) {
-	                var text = e.target.value.trim();
-	                _this.props.onSave(text, _this.props.currentTab);
-	                if (!_this.props.editing) {
-	                    _this.setState({ text: '' });
-	                }
-	            }
-	        };
-
-	        _this.state = {
-	            text: _this.props.text || ''
-	        };
-	        return _this;
-	    }
-
-	    // if focus moves from input & in editNote mode, save
-
-
-	    // if key is 'Enter', save note
-	    // if new note (i.e. not edit mode), clear input value
-
-
-	    _createClass(Input, [{
-	        key: 'render',
-	        value: function render() {
-	            var _this2 = this;
-
-	            return _react2.default.createElement('input', { type: 'text',
-	                autoFocus: 'true',
-	                value: this.state.text,
-	                onBlur: this.handleBlur,
-	                onChange: function onChange(e) {
-	                    _this2.setState({ text: e.target.value });
-	                },
-	                onKeyDown: this.handleSubmit
-	            });
-	        }
-	    }]);
-
-	    return Input;
-	}(_react.Component);
-
-	exports.default = Input;
-
-
-	Input.propTypes = {
-	    text: _react.PropTypes.string,
-	    currentTab: _react.PropTypes.number.isRequired,
-	    editing: _react.PropTypes.bool.isRequired,
-	    onSave: _react.PropTypes.func.isRequired
-	};
-
-/***/ },
-/* 204 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-
-	Object.defineProperty(exports, "__esModule", {
-	    value: true
-	});
-
-	var _reactRedux = __webpack_require__(185);
-
-	var _Input = __webpack_require__(203);
-
-	var _Input2 = _interopRequireDefault(_Input);
-
-	var _actions = __webpack_require__(199);
-
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-	var mapStateToProps = function mapStateToProps(state) {
-	    return {
-	        editing: false,
-	        currentTab: state.currentTab
-	    };
-	};
-
-	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-	    return {
-	        onSave: function onSave(text, tabId) {
-	            if (text.length !== 0) {
-	                dispatch((0, _actions.addNote)(text, tabId));
-	            }
-	        }
-	    };
-	};
-
-	var InputFooter = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Input2.default);
-
-	exports.default = InputFooter;
-
-/***/ },
-/* 205 */
-/***/ function(module, exports, __webpack_require__) {
-
 	// style-loader: Adds some css to the DOM by adding a <style> tag
 
 	// load the styles
-	var content = __webpack_require__(206);
+	var content = __webpack_require__(201);
 	if(typeof content === 'string') content = [[module.id, content, '']];
 	// add the styles to the DOM
-	var update = __webpack_require__(208)(content, {});
+	var update = __webpack_require__(203)(content, {});
 	if(content.locals) module.exports = content.locals;
 	// Hot Module Replacement
 	if(false) {
 		// When the styles change, update the <style> tags
 		if(!content.locals) {
-			module.hot.accept("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./App.css", function() {
-				var newContent = require("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./App.css");
+			module.hot.accept("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Tabs.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Tabs.css");
 				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
 				update(newContent);
 			});
@@ -23456,23 +23117,25 @@
 	}
 
 /***/ },
-/* 206 */
+/* 201 */
 /***/ function(module, exports, __webpack_require__) {
 
-	exports = module.exports = __webpack_require__(207)();
+	exports = module.exports = __webpack_require__(202)();
 	// imports
 
 
 	// module
-	exports.push([module.id, ".App__application___1hOCd {\n  background: #fff;\n  margin: 200px 0 40px 0;\n  position: relative;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),\n              0 25px 50px 0 rgba(0, 0, 0, 0.1);\n}", "", {"version":3,"sources":["/./components/App.css"],"names":[],"mappings":"AAAA;EACE,iBAAiB;EACjB,uBAAuB;EACvB,mBAAmB;EACnB;+CAC6C;CAC9C","file":"App.css","sourcesContent":[".application {\n  background: #fff;\n  margin: 200px 0 40px 0;\n  position: relative;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),\n              0 25px 50px 0 rgba(0, 0, 0, 0.1);\n}"],"sourceRoot":"webpack://"}]);
+	exports.push([module.id, "ul.Tabs__tabs___1FXS0{\n\tmargin: 0px;\n\tpadding: 0px;\n\tlist-style: none;\n}\n\nul.Tabs__tabs___1FXS0 li{\n\tbackground: none;\n\tcolor: #222;\n\tdisplay: inline-block;\n\tpadding: 10px 15px;\n\tcursor: pointer;\n}\n\nul.Tabs__tabs___1FXS0 li.Tabs__current___2lo-U{\n\tbackground: #ededed;\n\tcolor: #222;\n}\n\n.Tabs__tab-content___3j_Xq {\n\tdisplay: none;\n\tbackground: #ededed;\n\tpadding: 15px;\n}\n\n.Tabs__tab-content___3j_Xq.Tabs__current___2lo-U{\n\tdisplay: inherit;\n}", "", {"version":3,"sources":["/./components/Tabs.css"],"names":[],"mappings":"AAAA;CACC,YAAY;CACZ,aAAa;CACb,iBAAiB;CACjB;;AAED;CACC,iBAAiB;CACjB,YAAY;CACZ,sBAAsB;CACtB,mBAAmB;CACnB,gBAAgB;CAChB;;AAED;CACC,oBAAoB;CACpB,YAAY;CACZ;;AAED;CACC,cAAc;CACd,oBAAoB;CACpB,cAAc;CACd;;AAED;CACC,iBAAiB;CACjB","file":"Tabs.css","sourcesContent":["ul.tabs{\n\tmargin: 0px;\n\tpadding: 0px;\n\tlist-style: none;\n}\n\nul.tabs li{\n\tbackground: none;\n\tcolor: #222;\n\tdisplay: inline-block;\n\tpadding: 10px 15px;\n\tcursor: pointer;\n}\n\nul.tabs li.current{\n\tbackground: #ededed;\n\tcolor: #222;\n}\n\n.tab-content {\n\tdisplay: none;\n\tbackground: #ededed;\n\tpadding: 15px;\n}\n\n.tab-content.current{\n\tdisplay: inherit;\n}"],"sourceRoot":"webpack://"}]);
 
 	// exports
 	exports.locals = {
-		"application": "App__application___1hOCd"
+		"tabs": "Tabs__tabs___1FXS0",
+		"current": "Tabs__current___2lo-U",
+		"tab-content": "Tabs__tab-content___3j_Xq"
 	};
 
 /***/ },
-/* 207 */
+/* 202 */
 /***/ function(module, exports) {
 
 	/*
@@ -23528,7 +23191,7 @@
 
 
 /***/ },
-/* 208 */
+/* 203 */
 /***/ function(module, exports, __webpack_require__) {
 
 	/*
@@ -23778,6 +23441,570 @@
 			URL.revokeObjectURL(oldSrc);
 	}
 
+
+/***/ },
+/* 204 */
+/***/ function(module, exports) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	var nextNoteId = 0;
+	var nextTabId = 1;
+
+	var addNote = exports.addNote = function addNote(text, tabId) {
+	    return {
+	        type: 'ADD_NOTE',
+	        id: nextNoteId++,
+	        tabId: tabId,
+	        text: text
+	    };
+	};
+
+	var editNote = exports.editNote = function editNote(id, text) {
+	    return {
+	        type: 'EDIT_NOTE',
+	        id: id,
+	        text: text
+	    };
+	};
+
+	var deleteNote = exports.deleteNote = function deleteNote(id) {
+	    return {
+	        type: 'DELETE_NOTE',
+	        id: id
+	    };
+	};
+
+	var addTab = exports.addTab = function addTab(name) {
+	    return {
+	        type: 'ADD_TAB',
+	        id: nextTabId++,
+	        name: name
+	    };
+	};
+
+	var changeTab = exports.changeTab = function changeTab(tabId) {
+	    return {
+	        type: 'CHANGE_TAB',
+	        id: tabId
+	    };
+	};
+
+	var editTab = exports.editTab = function editTab(tabId, newName) {
+	    return {
+	        type: 'EDIT_TAB',
+	        id: tabId,
+	        newName: newName
+	    };
+	};
+
+/***/ },
+/* 205 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _reactRedux = __webpack_require__(185);
+
+	var _NotePanel = __webpack_require__(206);
+
+	var _NotePanel2 = _interopRequireDefault(_NotePanel);
+
+	var _actions = __webpack_require__(204);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var getTabNotes = function getTabNotes(notes, currentTab) {
+	    console.log('CurrentTab: ' + currentTab);
+	    notes.forEach(function (note) {
+	        console.log('Note: ' + JSON.stringify(note));
+	    });
+	    return notes.filter(function (note) {
+	        return note.tabId === currentTab;
+	    });
+	};
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        notes: getTabNotes(state.notes, state.currentTab)
+	    };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        onEdit: function onEdit(id, text) {
+	            dispatch((0, _actions.editNote)(id, text));
+	        },
+	        onDelete: function onDelete(id) {
+	            dispatch((0, _actions.deleteNote)(id));
+	        }
+	    };
+	};
+
+	var PanelContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_NotePanel2.default);
+
+	exports.default = PanelContainer;
+
+/***/ },
+/* 206 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Note = __webpack_require__(207);
+
+	var _Note2 = _interopRequireDefault(_Note);
+
+	var _NotePanel = __webpack_require__(211);
+
+	var _NotePanel2 = _interopRequireDefault(_NotePanel);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var NotePanel = function NotePanel(_ref) {
+	    var notes = _ref.notes;
+	    var onEdit = _ref.onEdit;
+	    var onDelete = _ref.onDelete;
+	    return _react2.default.createElement(
+	        'ul',
+	        { className: _NotePanel2.default.noteList },
+	        notes.map(function (note) {
+	            return _react2.default.createElement(_Note2.default, _extends({
+	                key: note.id
+	            }, note, { // contains text, tabId
+	                editNote: function editNote(text) {
+	                    return onEdit(note.id, text);
+	                },
+	                deleteNote: function deleteNote() {
+	                    return onDelete(note.id);
+	                }
+	            }));
+	        })
+	    );
+	};
+
+	NotePanel.propTypes = {
+	    notes: _react.PropTypes.arrayOf(_react.PropTypes.shape({
+	        id: _react.PropTypes.number.isRequired,
+	        tabId: _react.PropTypes.number.isRequired,
+	        text: _react.PropTypes.string.isRequired
+	    }).isRequired).isRequired,
+	    onEdit: _react.PropTypes.func.isRequired,
+	    onDelete: _react.PropTypes.func.isRequired
+	};
+
+	exports.default = NotePanel;
+
+/***/ },
+/* 207 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _Input = __webpack_require__(208);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _classnames2 = __webpack_require__(199);
+
+	var _classnames3 = _interopRequireDefault(_classnames2);
+
+	var _NotePanel = __webpack_require__(211);
+
+	var _NotePanel2 = _interopRequireDefault(_NotePanel);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Note = function (_Component) {
+	    _inherits(Note, _Component);
+
+	    function Note(props) {
+	        _classCallCheck(this, Note);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Note).call(this, props));
+
+	        _this.handleDoubleCLick = function () {
+	            _this.setState({ editing: true });
+	        };
+
+	        _this.handleSave = function (text, tabId) {
+	            if (text.length === 0) {
+	                _this.props.deleteNote();
+	            } else {
+	                _this.props.editNote(text);
+	            }
+	            _this.setState({ editing: false });
+	        };
+
+	        _this.state = {
+	            editing: false
+	        };
+	        return _this;
+	    }
+
+	    _createClass(Note, [{
+	        key: 'render',
+	        value: function render() {
+	            var _this2 = this,
+	                _classnames;
+
+	            var element = void 0;
+	            if (this.state.editing) {
+	                element = _react2.default.createElement(_Input2.default, {
+	                    text: this.props.text,
+	                    tabId: this.props.tabId,
+	                    editing: this.state.editing,
+	                    onSave: this.handleSave
+	                });
+	            } else {
+	                element = _react2.default.createElement(
+	                    'div',
+	                    null,
+	                    _react2.default.createElement(
+	                        'label',
+	                        { onDoubleClick: this.handleDoubleCLick },
+	                        this.props.text
+	                    ),
+	                    _react2.default.createElement('a', { href: '#',
+	                        className: _NotePanel2.default.destroy,
+	                        onClick: function onClick(e) {
+	                            e.preventDefault();
+	                            _this2.props.deleteNote();
+	                        }
+	                    })
+	                );
+	            }
+
+	            return _react2.default.createElement(
+	                'li',
+	                { className: (0, _classnames3.default)((_classnames = {}, _defineProperty(_classnames, _NotePanel2.default.display, !this.state.editing), _defineProperty(_classnames, _NotePanel2.default.editing, this.state.editing), _classnames)) },
+	                element
+	            );
+	        }
+	    }]);
+
+	    return Note;
+	}(_react.Component);
+
+	exports.default = Note;
+
+
+	Note.propTypes = {
+	    text: _react.PropTypes.string.isRequired,
+	    tabId: _react.PropTypes.number.isRequired,
+	    editNote: _react.PropTypes.func.isRequired,
+	    deleteNote: _react.PropTypes.func.isRequired
+	};
+
+/***/ },
+/* 208 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(1);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	var _classnames2 = __webpack_require__(199);
+
+	var _classnames3 = _interopRequireDefault(_classnames2);
+
+	var _Input = __webpack_require__(209);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var Input = function (_Component) {
+	    _inherits(Input, _Component);
+
+	    function Input(props) {
+	        _classCallCheck(this, Input);
+
+	        var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Input).call(this, props));
+
+	        _this.handleBlur = function (e) {
+	            if (_this.props.editing) {
+	                _this.props.onSave(e.target.value, _this.props.currentTab);
+	            }
+	        };
+
+	        _this.handleSubmit = function (e) {
+	            if (e.which === 13) {
+	                var text = e.target.value.trim();
+	                _this.props.onSave(text, _this.props.currentTab);
+	                if (!_this.props.editing) {
+	                    _this.setState({ text: '' });
+	                }
+	            }
+	        };
+
+	        _this.state = {
+	            text: _this.props.text || ''
+	        };
+	        return _this;
+	    }
+
+	    // if focus moves from input & in editNote mode, save
+
+
+	    // if key is 'Enter', save note
+	    // if new note (i.e. not edit mode), clear input value
+
+
+	    _createClass(Input, [{
+	        key: 'render',
+	        value: function render() {
+	            var _classnames,
+	                _this2 = this;
+
+	            return _react2.default.createElement('input', { className: (0, _classnames3.default)((_classnames = {}, _defineProperty(_classnames, _Input2.default.new, !this.state.editing), _defineProperty(_classnames, _Input2.default.edit, this.state.editing), _classnames)),
+	                type: 'text',
+	                autoFocus: 'true',
+	                value: this.state.text,
+	                onBlur: this.handleBlur,
+	                onChange: function onChange(e) {
+	                    _this2.setState({ text: e.target.value });
+	                },
+	                onKeyDown: this.handleSubmit
+	            });
+	        }
+	    }]);
+
+	    return Input;
+	}(_react.Component);
+
+	exports.default = Input;
+
+
+	Input.propTypes = {
+	    text: _react.PropTypes.string,
+	    currentTab: _react.PropTypes.number.isRequired,
+	    editing: _react.PropTypes.bool.isRequired,
+	    onSave: _react.PropTypes.func.isRequired
+	};
+
+/***/ },
+/* 209 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(210);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(203)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Input.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./Input.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 210 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(202)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".Input__new___2AgQ0, .Input__edit___10EA- {\n  position: relative;\n  margin: 0;\n  width: 100%;\n  font-size: 14px;\n  font-family: inherit;\n  font-weight: inherit;\n  border: 0;\n  outline: none;\n  color: inherit;\n  box-sizing: border-box;\n  font-smoothing: antialiased;\n}\n\n.Input__new___2AgQ0 {\n  padding: 16px;\n  border-top: 1px solid #ededed;\n  background: rgba(0, 0, 0, 0.003);\n  box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);\n}\n\n.Input__edit___10EA- {\n  border: none;\n}\n", "", {"version":3,"sources":["/./components/Input.css"],"names":[],"mappings":"AAAA;EACE,mBAAmB;EACnB,UAAU;EACV,YAAY;EACZ,gBAAgB;EAChB,qBAAqB;EACrB,qBAAqB;EACrB,UAAU;EACV,cAAc;EACd,eAAe;EACf,uBAAuB;EACvB,4BAA4B;CAC7B;;AAED;EACE,cAAc;EACd,8BAA8B;EAC9B,iCAAiC;EACjC,8CAA8C;CAC/C;;AAED;EACE,aAAa;CACd","file":"Input.css","sourcesContent":[".new, .edit {\n  position: relative;\n  margin: 0;\n  width: 100%;\n  font-size: 14px;\n  font-family: inherit;\n  font-weight: inherit;\n  border: 0;\n  outline: none;\n  color: inherit;\n  box-sizing: border-box;\n  font-smoothing: antialiased;\n}\n\n.new {\n  padding: 16px;\n  border-top: 1px solid #ededed;\n  background: rgba(0, 0, 0, 0.003);\n  box-shadow: inset 0 -2px 1px rgba(0,0,0,0.03);\n}\n\n.edit {\n  border: none;\n}\n"],"sourceRoot":"webpack://"}]);
+
+	// exports
+	exports.locals = {
+		"new": "Input__new___2AgQ0",
+		"edit": "Input__edit___10EA-"
+	};
+
+/***/ },
+/* 211 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(212);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(203)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./NotePanel.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./NotePanel.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 212 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(202)();
+	// imports
+
+
+	// module
+	exports.push([module.id, ".NotePanel__noteList___2gnIl {\n  margin: 0;\n  padding: 0;\n  min-height: 200px;\n  /*list-style: none;*/\n}\n\n.NotePanel__noteList___2gnIl li {\n  position: relative;\n  font-size: 14px;\n  margin-left: 40px;\n  /*border-bottom: 1px solid #ededed;*/\n}\n\n.NotePanel__noteList___2gnIl li:last-child {\n  border-bottom: none;\n}\n\n.NotePanel__noteList___2gnIl li.NotePanel__editing___29Vo4 {\n  border-bottom: none;\n  padding: 0;\n}\n\n\n\n.NotePanel__display___3J3fH label {\n  white-space: pre-line;\n  word-break: break-all;\n  padding: 6px 55px 6px 6px;\n  margin-left: -8px;\n  display: block;\n  transition: color 0.4s;\n}\n\n.NotePanel__display___3J3fH:hover {\n\tbackground: #fcfcfc;\n}\n\n.NotePanel__display___3J3fH .NotePanel__destroy___8ztQ5 {\n  display: none;\n  position: absolute;\n  top: 2px;\n  right: 8px;\n  width: 30px;\n  height: 30px;\n  margin: auto 0;\n  font-size: 20px;\n  color: #cc9a9a;\n  transition: color 0.2s ease-out;\n  text-decoration: none;\n}\n\n.NotePanel__display___3J3fH .NotePanel__destroy___8ztQ5:hover {\n  color: #af5b5e;\n}\n\n.NotePanel__display___3J3fH .NotePanel__destroy___8ztQ5:after {\n  content: '\\D7';\n}\n\n.NotePanel__display___3J3fH:hover .NotePanel__destroy___8ztQ5 {\n  display: block;\n}\n\n.NotePanel__editing___29Vo4 {\n  border-bottom: none;\n  padding: 0;\n  background: #ffffff;\n}\n\n.NotePanel__editing___29Vo4 .NotePanel__edit___1KjKZ {\n  display: block;\n  width: 506px;\n  padding: 13px 17px 12px 17px;\n  margin: 0 0 0 2px;\n}\n\n.NotePanel__editing___29Vo4:last-child {\n  margin-bottom: -1px;\n}\n", "", {"version":3,"sources":["/./components/NotePanel.css"],"names":[],"mappings":"AAAA;EACE,UAAU;EACV,WAAW;EACX,kBAAkB;EAClB,qBAAqB;CACtB;;AAED;EACE,mBAAmB;EACnB,gBAAgB;EAChB,kBAAkB;EAClB,qCAAqC;CACtC;;AAED;EACE,oBAAoB;CACrB;;AAED;EACE,oBAAoB;EACpB,WAAW;CACZ;;;;AAID;EACE,sBAAsB;EACtB,sBAAsB;EACtB,0BAA0B;EAC1B,kBAAkB;EAClB,eAAe;EACf,uBAAuB;CACxB;;AAED;CACC,oBAAoB;CACpB;;AAED;EACE,cAAc;EACd,mBAAmB;EACnB,SAAS;EACT,WAAW;EACX,YAAY;EACZ,aAAa;EACb,eAAe;EACf,gBAAgB;EAChB,eAAe;EACf,gCAAgC;EAChC,sBAAsB;CACvB;;AAED;EACE,eAAe;CAChB;;AAED;EACE,eAAa;CACd;;AAED;EACE,eAAe;CAChB;;AAED;EACE,oBAAoB;EACpB,WAAW;EAEX,oBAAoB;CACrB;;AAED;EACE,eAAe;EACf,aAAa;EACb,6BAA6B;EAC7B,kBAAkB;CACnB;;AAED;EACE,oBAAoB;CACrB","file":"NotePanel.css","sourcesContent":[".noteList {\n  margin: 0;\n  padding: 0;\n  min-height: 200px;\n  /*list-style: none;*/\n}\n\n.noteList li {\n  position: relative;\n  font-size: 14px;\n  margin-left: 40px;\n  /*border-bottom: 1px solid #ededed;*/\n}\n\n.noteList li:last-child {\n  border-bottom: none;\n}\n\n.noteList li.editing {\n  border-bottom: none;\n  padding: 0;\n}\n\n\n\n.display label {\n  white-space: pre-line;\n  word-break: break-all;\n  padding: 6px 55px 6px 6px;\n  margin-left: -8px;\n  display: block;\n  transition: color 0.4s;\n}\n\n.display:hover {\n\tbackground: #fcfcfc;\n}\n\n.display .destroy {\n  display: none;\n  position: absolute;\n  top: 2px;\n  right: 8px;\n  width: 30px;\n  height: 30px;\n  margin: auto 0;\n  font-size: 20px;\n  color: #cc9a9a;\n  transition: color 0.2s ease-out;\n  text-decoration: none;\n}\n\n.display .destroy:hover {\n  color: #af5b5e;\n}\n\n.display .destroy:after {\n  content: '×';\n}\n\n.display:hover .destroy {\n  display: block;\n}\n\n.editing {\n  border-bottom: none;\n  padding: 0;\n  composes: display;\n  background: #ffffff;\n}\n\n.editing .edit {\n  display: block;\n  width: 506px;\n  padding: 13px 17px 12px 17px;\n  margin: 0 0 0 2px;\n}\n\n.editing:last-child {\n  margin-bottom: -1px;\n}\n"],"sourceRoot":"webpack://"}]);
+
+	// exports
+	exports.locals = {
+		"noteList": "NotePanel__noteList___2gnIl",
+		"editing": "NotePanel__editing___29Vo4 NotePanel__display___3J3fH",
+		"display": "NotePanel__display___3J3fH",
+		"destroy": "NotePanel__destroy___8ztQ5",
+		"edit": "NotePanel__edit___1KjKZ"
+	};
+
+/***/ },
+/* 213 */
+/***/ function(module, exports, __webpack_require__) {
+
+	'use strict';
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+
+	var _reactRedux = __webpack_require__(185);
+
+	var _Input = __webpack_require__(208);
+
+	var _Input2 = _interopRequireDefault(_Input);
+
+	var _actions = __webpack_require__(204);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	var mapStateToProps = function mapStateToProps(state) {
+	    return {
+	        editing: false,
+	        currentTab: state.currentTab
+	    };
+	};
+
+	var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+	    return {
+	        onSave: function onSave(text, tabId) {
+	            if (text.length !== 0) {
+	                dispatch((0, _actions.addNote)(text, tabId));
+	            }
+	        }
+	    };
+	};
+
+	var InputFooter = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_Input2.default);
+
+	exports.default = InputFooter;
+
+/***/ },
+/* 214 */
+/***/ function(module, exports, __webpack_require__) {
+
+	// style-loader: Adds some css to the DOM by adding a <style> tag
+
+	// load the styles
+	var content = __webpack_require__(215);
+	if(typeof content === 'string') content = [[module.id, content, '']];
+	// add the styles to the DOM
+	var update = __webpack_require__(203)(content, {});
+	if(content.locals) module.exports = content.locals;
+	// Hot Module Replacement
+	if(false) {
+		// When the styles change, update the <style> tags
+		if(!content.locals) {
+			module.hot.accept("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./App.css", function() {
+				var newContent = require("!!./../node_modules/css-loader/index.js?modules&sourceMap&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!./App.css");
+				if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+				update(newContent);
+			});
+		}
+		// When the module is disposed, remove the <style> tags
+		module.hot.dispose(function() { update(); });
+	}
+
+/***/ },
+/* 215 */
+/***/ function(module, exports, __webpack_require__) {
+
+	exports = module.exports = __webpack_require__(202)();
+	// imports
+
+
+	// module
+	exports.push([module.id, "body {\n  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  background: #f5f5f5;\n  color: #3d3d3d;\n  min-width: 230px;\n  max-width: 550px;\n  margin: 0 auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-font-smoothing: antialiased;\n  -ms-font-smoothing: antialiased;\n  font-smoothing: antialiased;\n  font-weight: 400;\n}\n\n.App__application___1hOCd {\n  background: #fff;\n  margin: 200px 0 40px 0;\n  position: relative;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),\n              0 25px 50px 0 rgba(0, 0, 0, 0.1);\n}", "", {"version":3,"sources":["/./components/App.css"],"names":[],"mappings":"AAAA;EACE,0DAA0D;EAC1D,oBAAoB;EACpB,eAAe;EACf,iBAAiB;EACjB,iBAAiB;EACjB,eAAe;EACf,oCAAoC;EACpC,iCAAiC;EACjC,gCAAgC;EAChC,4BAA4B;EAC5B,iBAAiB;CAClB;;AAED;EACE,iBAAiB;EACjB,uBAAuB;EACvB,mBAAmB;EACnB;+CAC6C;CAC9C","file":"App.css","sourcesContent":["body {\n  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;\n  background: #f5f5f5;\n  color: #3d3d3d;\n  min-width: 230px;\n  max-width: 550px;\n  margin: 0 auto;\n  -webkit-font-smoothing: antialiased;\n  -moz-font-smoothing: antialiased;\n  -ms-font-smoothing: antialiased;\n  font-smoothing: antialiased;\n  font-weight: 400;\n}\n\n.application {\n  background: #fff;\n  margin: 200px 0 40px 0;\n  position: relative;\n  box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),\n              0 25px 50px 0 rgba(0, 0, 0, 0.1);\n}"],"sourceRoot":"webpack://"}]);
+
+	// exports
+	exports.locals = {
+		"application": "App__application___1hOCd"
+	};
 
 /***/ }
 /******/ ]);
